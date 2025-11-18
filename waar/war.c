@@ -253,7 +253,7 @@ int main(void) {
     char *missaoJog1 = (char*) malloc(MISSao_TAMANHO);
     char *missaoJog2 = (char*) malloc(MISSao_TAMANHO);
     if (!missaoJog1 || !missaoJog2) {
-        fprintf(stderr, "Erro: falha na alocação de memória para missões.\n");
+        fprintf(stderr, "Erro: falha na alocaçao de memoria para missoes.\n");
         liberarMemoria(mapa, missaoJog1, missaoJog2);
         return EXIT_FAILURE;
     }
@@ -262,7 +262,8 @@ int main(void) {
     atribuirMissao(missaoJog2, missoesDisponiveis, totalMissoes);
 
     /* Exibe missões apenas uma vez no início */
-    printf("\n---------------------- MISSÕES ----------------------\n");
+    
+    printf("\n---------------------- MISSOES ----------------------\n");
     printf("Jogador 1 (%s): ", corJog1); exibirMissao(missaoJog1);
     printf("Jogador 2 (%s): ", corJog2); exibirMissao(missaoJog2);
     printf("-----------------------------------------------------\n\n");
@@ -284,7 +285,7 @@ int main(void) {
 
         printf("\nVez do Jogador %d (cor %s)\n", jogadorAtual, corAtual);
         printf("Missao: %s\n", missaoAtual);
-        printf("\nAções disponiveis:\n");
+        printf("\nAçoes disponiveis:\n");
         printf(" 1) Atacar\n");
         printf(" 2) Passar turno\n");
         printf(" 3) Mostrar missao (novamente)\n");
@@ -300,9 +301,10 @@ int main(void) {
             break;
         } else if (acao == 1) {
             /* Escolha do território atacante */
+
             int idxAtk = -1, idxDef = -1;
             do {
-                printf("Informe o numero do território ATACANTE (ou 0 para cancelar): ");
+                printf("Informe o numero do territorio ATACANTE (ou 0 para cancelar): ");
                 if (!fgets(linha, sizeof(linha), stdin)) linha[0] = '\0';
                 idxAtk = atoi(linha) - 1;
                 if (idxAtk == -1) { printf("Ataque cancelado.\n"); break; }
@@ -324,12 +326,12 @@ int main(void) {
             if (idxAtk >= 0) {
                 /* Escolha do defensor */
                 do {
-                    printf("Informe o numero do território DEFENSOR (ou 0 para cancelar): ");
+                    printf("Informe o numero do territorio DEFENSOR (ou 0 para cancelar): ");
                     if (!fgets(linha, sizeof(linha), stdin)) linha[0] = '\0';
                     idxDef = atoi(linha) - 1;
                     if (idxDef == -1) { printf("Ataque cancelado.\n"); break; }
                     if (idxDef < 0 || idxDef >= totalTerritorios) {
-                        printf("Índice inválido. Tente novamente.\n");
+                        printf("Indice invalido. Tente novamente.\n");
                         idxDef = -2; continue;
                     }
                     if (idxDef == idxAtk) {
@@ -337,7 +339,7 @@ int main(void) {
                         idxDef = -2; continue;
                     }
                     if (strcmp(mapa[idxDef].cor, corAtual) == 0) {
-                        printf("Você nao pode atacar um territorio da propria cor.\n");
+                        printf("Voce nao pode atacar um territorio da propria cor.\n");
                         idxDef = -2; continue;
                     }
                     break;
@@ -351,29 +353,31 @@ int main(void) {
         } else if (acao == 2) {
             printf("Turno passado.\n");
         } else if (acao == 3) {
-            printf("\nReexibindo missão: %s\n", missaoAtual);
+            printf("\nReexibindo missao: %s\n", missaoAtual);
             printf("Pressione ENTER para continuar...");
             limparBuffer();
         } else {
-            printf("Opção inválida. Pulando turno.\n");
+            printf("Opçao invalida. Pulando turno.\n");
         }
 
         /* Verificação de missão do jogador atual (após ação) */
+
         if (verificarMissao((char*)missaoAtual, mapa, totalTerritorios, corAtual, missoesDisponiveis, totalMissoes)) {
             limparTela();
             exibirBanner();
-            printf("\n*** PARABÉNS! Jogador %d (cor %s) cumpriu sua missão: %s ***\n\n", jogadorAtual, corAtual, missaoAtual);
+            printf("\n*** PARABENS! Jogador %d (cor %s) cumpriu sua missao: %s ***\n", jogadorAtual, corAtual, missaoAtual);
             vencedor = jogadorAtual;
             break;
         }
 
         /* Também verificar se o adversário já cumpriu (pode ocorrer por reação anterior) */
+
         const char *corAdversario = (jogadorAtual == 1) ? corJog2 : corJog1;
         const char *missaoAdv = (jogadorAtual == 1) ? missaoJog2 : missaoJog1;
         if (verificarMissao((char*)missaoAdv, mapa, totalTerritorios, corAdversario, missoesDisponiveis, totalMissoes)) {
             limparTela();
             exibirBanner();
-            printf("\n*** ATENÇÃO! Jogador adversário já cumpriu a missão: %s ***\n", missaoAdv);
+            printf("\n*** ATENÇAO! Jogador adversário já cumpriu a missao: %s ***\n", missaoAdv);
             vencedor = (jogadorAtual == 1) ? 2 : 1;
             break;
         }
@@ -384,6 +388,7 @@ int main(void) {
     }
 
     /* Resultado final */
+
     if (vencedor == 1) {
         printf("\n>>> Vencedor: Jogador 1 (cor %s)\n", corJog1);
     } else if (vencedor == 2) {
@@ -393,8 +398,11 @@ int main(void) {
     }
 
     /* Libera memória */
+
+
     liberarMemoria(mapa, missaoJog1, missaoJog2);
 
     printf("\nMemória liberada. Obrigado por jogar!\n");
+
     return 0;
 }
