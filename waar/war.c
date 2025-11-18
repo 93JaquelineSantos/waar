@@ -53,7 +53,7 @@ void limparTela(void) {
 /* Exibe cabeçalho/banner do jogo */
 void exibirBanner(void) {
     printf("=============================================================\n");
-    printf("                  WAR ESTRUTURADO - JOGO                    \n");
+    printf("                  WAR ---- JOGO                    \n");
     printf("=============================================================\n");
 }
 
@@ -262,7 +262,7 @@ int main(void) {
     atribuirMissao(missaoJog2, missoesDisponiveis, totalMissoes);
 
     /* Exibe missões apenas uma vez no início */
-    
+
     printf("\n---------------------- MISSOES ----------------------\n");
     printf("Jogador 1 (%s): ", corJog1); exibirMissao(missaoJog1);
     printf("Jogador 2 (%s): ", corJog2); exibirMissao(missaoJog2);
